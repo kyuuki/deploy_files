@@ -1,0 +1,19 @@
+[Unit]
+Description=%%%APP_INSTANCE_NAME%%%
+After=network.target
+
+[Service]
+Type=simple
+User=ec2-user
+WorkingDirectory=%%%RAILS_ROOT_DIR%%%
+EnvironmentFile=%%%RAILS_ROOT_DIR%%%/.env
+
+# https://www.rochefort.dev/posts/puma-systemd/
+ExecStart=/bin/bash -lc 'rails s -e production'
+
+TimeoutSec=300
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+

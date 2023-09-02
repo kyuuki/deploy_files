@@ -33,7 +33,11 @@ fi
 if [ -e ${RAILS_ROOT_DIR} ]; then
     echo "Skip git clone."
 else
-    git clone ${GITHUB_URL} ${RAILS_ROOT_DIR}
+    if [ -z ${GITHUB_BRANCH_NAME} ]; then
+      git clone ${GITHUB_URL} ${RAILS_ROOT_DIR}
+    else
+      git clone -b ${GITHUB_BRANCH_NAME} ${GITHUB_URL} ${RAILS_ROOT_DIR}
+    fi
     if [ $? -ne 0 ]; then
         echo >&2 "ERROR: git clone error."
         exit 1
